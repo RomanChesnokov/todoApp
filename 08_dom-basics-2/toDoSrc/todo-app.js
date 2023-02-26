@@ -40,7 +40,7 @@
     return list;
   }
 
-  // создаем и возвращаем кнопку очистки списка дел и из localStorage
+  // создаем и возвращаем кнопку очистки списка дел и из localStorage. навешиваем на нее события при нажатии
   function createBlankListBtn() {
     let blankListButtonWrapper = document.createElement('div');
     let blankListButton = document.createElement('button');
@@ -112,6 +112,17 @@
     container.append(todoList);
     container.append(todoBlankListBtn.blankListButtonWrapper);
 
+    todoBlankListBtn.blankListButton.addEventListener('click', function() {
+      if (confirm('Вы уверены, что хотите удалить весь список дел?')) {
+        while (todoList.firstChild) {
+          todoList.removeChild(todoList.firstChild);
+        }
+      }
+        //удаляем все дела из массива дел
+      allTasks.splice(0);
+      saveTodoList(allTasks, listName);
+    });
+
     // проверяем есть ли в localStorage данные, если есть то генерим из него список
     if (localStorage.getItem(listName)) {
       allTasks = JSON.parse(localStorage.getItem(listName));
@@ -139,15 +150,6 @@
             let task = allTasks.findIndex(item => item.id == name.id);
             allTasks.splice(task, 1);
           }
-          saveTodoList(allTasks, listName);
-        });
-
-        todoBlankListBtn.blankListButton.addEventListener('click', function() {
-          while (todoList.firstChild) {
-            todoList.removeChild(todoList.firstChild);
-          }
-          // удаляем все дела из массива дел
-          allTasks.splice(0);
           saveTodoList(allTasks, listName);
         });
 
@@ -198,15 +200,6 @@
           let task = allTasks.findIndex(item => item.id == work.id);
           allTasks.splice(task, 1);
         }
-        saveTodoList(allTasks, listName);
-      });
-
-      todoBlankListBtn.blankListButton.addEventListener('click', function() {
-        while (todoList.firstChild) {
-          todoList.removeChild(todoList.firstChild);
-        }
-          //удаляем все дела из массива дел
-        allTasks.splice(0);
         saveTodoList(allTasks, listName);
       });
 
