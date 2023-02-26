@@ -65,6 +65,13 @@
     // устанавливаем стили для элемента списка, а также для размещения кнопок
     // в его правой части с помощью Flex
     item.classList.add('list-group-item', 'd-flex', 'justify-content-between', "align-items-center");
+
+
+    // проверяем выполнено ли уже это дело, и если выполнено красим его в зеленый
+    if (work.done == true) {
+      item.classList.add('list-group-item-success');
+    }
+
     item.textContent = work.name; //+ '   Id:' + work.id + '   done: ' + work.done;
 
     buttonGroup.classList.add('btn-group', 'btn-group-sm');
